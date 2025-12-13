@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <unordered_set>
 
 void removeDuplicates(std::vector<int> &nums) {
     if (!nums.empty()) {
@@ -33,6 +34,20 @@ void removeDuplicates(std::vector<int> &nums) {
     }
 }
 
+void removeDuplicatesKeepOrder(std::vector<int> &nums) {
+    std::vector<int> tmp;
+    std::unordered_set<int> seen;
+
+    for (const int num : nums) {
+        if (seen.find(num) == seen.end()) {
+            tmp.push_back(num);
+            seen.insert(num);
+        }
+    }
+
+    nums = tmp;
+}
+
 void printVector(const std::vector<int> &nums) {
     for (size_t i = 0; i < nums.size(); i++)
         if (i < nums.size() - 1)
@@ -42,7 +57,7 @@ void printVector(const std::vector<int> &nums) {
 }
 
 int main(int argc, char *args[]) {
-    std::vector<int> test_vector = {2,1,5,3,4,8,6,7,10,9};
+    std::vector<int> test_vector = {2,2,2,2,2,1,5,3,7,1,4,8,6,7,10,9,10};
  
     std::cout << "Before removing duplicates: ";
 
@@ -50,7 +65,7 @@ int main(int argc, char *args[]) {
 
     std::cout << "\nAfter removing duplicates: ";
 
-    removeDuplicates(test_vector);
+    removeDuplicatesKeepOrder(test_vector);
 
     printVector(test_vector);
 
