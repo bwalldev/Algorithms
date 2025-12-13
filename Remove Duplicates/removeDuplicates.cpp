@@ -1,9 +1,14 @@
+// Simple algorithm to remove duplicate int values from a vector 
+
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 void removeDuplicates(std::vector<int> &nums) {
     if (!nums.empty()) {
+        std::sort(nums.begin(), nums.end());
+
         std::unique_ptr<int> prev = nullptr;
 
         std::vector<int> tmp;
@@ -37,7 +42,7 @@ void printVector(const std::vector<int> &nums) {
 }
 
 int main(int argc, char *args[]) {
-    std::vector<int> test_vector = {1, 1, 1, 2, 2, 3, 4, 4, 5, 6, 6, 6, 6, 7, 8, 9, 10, 11, 11};
+    std::vector<int> test_vector = {2,1,5,3,4,8,6,7,10,9};
  
     std::cout << "Before removing duplicates: ";
 
