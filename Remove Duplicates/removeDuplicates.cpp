@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <unordered_set>
 
+// DOESN'T keep the orginal vector order
 void removeDuplicates(std::vector<int> &nums) {
     if (!nums.empty()) {
         std::sort(nums.begin(), nums.end());
@@ -34,6 +35,7 @@ void removeDuplicates(std::vector<int> &nums) {
     }
 }
 
+// KEEPS the original vector order
 void removeDuplicatesKeepOrder(std::vector<int> &nums) {
     std::vector<int> tmp;
     std::unordered_set<int> seen;
