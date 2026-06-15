@@ -18,6 +18,7 @@ template <typename T>
 void merge(std::vector<T> &some_list, int left, int mid, int right)
 {
     // The number of elements in the left and right halves of some_list
+    int n = some_list.size();
     int n_left = mid - left + 1;
     int n_right = mid + 1 + right;
 
@@ -33,41 +34,52 @@ void merge(std::vector<T> &some_list, int left, int mid, int right)
     for (size_t i = 0; i < n_right; ++i)
         right_subvector[i] = some_list[i + mid + 1];
 
+    // Counters
     size_t i = 0;
     size_t j = 0;
-    size_t L = left;
 
-    // merging left_subvector and right_subvector back into some_list in ascending order
-    while (i < n_left && j < n_right)
+    // Tracks where the current index is being modified while merging
+    size_t curr_index = left;
+
+    // Merging left_subvector and right_subvector back into some_list in ascending order
+    while (i < n_left && j < n_right && curr_index < n)
     {
+        // Current element in left_subvector is less than the current element in right_subvector
+        // Make current index of some_list equal to the current left_subvector element
         if (left_subvector[i] <= right_subvector[j])
         {
-            some_list[L] = left_subvector[i];
+            some_list[curr_index] = left_subvector[i];
+
             ++i;
-            ++L;
+            ++curr_index;
         }
+        // Current element in right_subvector is less than the current element in left_subvector
+        // Make current index of some_list equal to the current right_subvector element
         else
         {
-            some_list[L] = right_subvector[j];
+            some_list[curr_index] = right_subvector[j];
+
             ++j;
-            ++L;
+            ++curr_index;
         }
     }
 
     // Adding left over items from left_subvector if any exist (when n_left > n_right)
     while (i < n_left)
     {
-        some_list[L] = left_subvector[i];
+        some_list[curr_index] = left_subvector[i];
+
         ++i;
-        ++L;
+        ++curr_index;
     }
 
     // Adding left over items from right_subvector if any exist (when n_right > n_left) 
     while (j < n_right)
     {
-        some_list[L] = right_subvector[j];
+        some_list[curr_index] = right_subvector[j];
+        
         ++j;
-        ++L;
+        ++curr_index;
     }
 }
 
@@ -84,6 +96,7 @@ void mergeSort(std::vector<T> &some_list, int left, int right)
     mergeSort(some_list, 0, mid);
     mergeSort(some_list, mid + 1, right);
 
+    // Modifies some_list to be in ascending order by merging the left and right halves of some_list
     merge(some_list, left, mid, right);
 }
 
